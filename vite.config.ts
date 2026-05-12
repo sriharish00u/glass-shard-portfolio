@@ -6,6 +6,11 @@ export default defineConfig({
   },
 
   vite: {
+    define: {
+      process: {},
+      "process.env": {},
+    },
+
     server: {
       allowedHosts: ["glass-shard-portfolio.onrender.com"],
     },
