@@ -54,7 +54,13 @@ function ProjectCard({ p, idx }: { p: Project; idx: number }) {
         >
           {p.name}
         </h3>
-        <p className="text-[15px] text-[#F5F0E8]/60 leading-[1.7] mt-4">{p.description}</p>
+        <p className="text-[15px] text-[#F5F0E8]/60 leading-[1.7] mt-4">
+          {p.description.split(" ").map((w, i) => (
+            <span key={i} className="word" data-hover>
+              {w}
+            </span>
+          ))}
+        </p>
         <div className="flex flex-wrap gap-2 mt-5">
           {p.stack.map((t) => (
             <span

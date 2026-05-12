@@ -89,21 +89,19 @@ function Arrow({
 
 export function Milestones() {
   const [active, setActive] = useState(0);
-  const { playPop, playClick, playSwipe, playTock } = useSound();
+  const { playPop, playClick, playPageFlip } = useSound();
 
   const goNext = useCallback(() => {
     if (active >= CARDS.length - 1) return;
-    playSwipe();
-    setTimeout(() => playTock(), 400);
+    playPageFlip();
     setActive((a) => a + 1);
-  }, [active, playSwipe, playTock]);
+  }, [active, playPageFlip]);
 
   const goPrev = useCallback(() => {
     if (active <= 0) return;
-    playSwipe();
-    setTimeout(() => playTock(), 400);
+    playPageFlip();
     setActive((a) => a - 1);
-  }, [active, playSwipe, playTock]);
+  }, [active, playPageFlip]);
 
   const card = CARDS[active];
 

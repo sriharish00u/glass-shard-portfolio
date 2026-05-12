@@ -7,8 +7,18 @@ export default defineConfig({
 
   vite: {
     define: {
-      process: {},
-      "process.env": {},
+      global: "globalThis",
+      process: {
+        env: {},
+      },
+    },
+
+    optimizeDeps: {
+      esbuildOptions: {
+        define: {
+          global: "globalThis",
+        },
+      },
     },
 
     server: {

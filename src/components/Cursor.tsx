@@ -4,7 +4,7 @@ import { useSound } from "@/hooks/useSound";
 export function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
-  const { playCursorHover } = useSound();
+  const { playCursorHover, playClick } = useSound();
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
@@ -15,6 +15,16 @@ export function Cursor() {
     let trailY = dotY;
     let raf = 0;
     let hoverThrottle = 0;
+    let clickThrottle = 0;
+
+    const onClick = () => {
+      const now = Date.now();
+      if (now - clickThrottle > 120) {
+        clickThrottle = now;
+        playClick();
+      }
+    };
+    document.addEventListener("click", onClick);
 
     const onMove = (e: MouseEvent) => {
       dotX = e.clientX;
@@ -67,6 +77,7 @@ export function Cursor() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
+      document.removeEventListener("click", onClick);
       mo.disconnect();
     };
   }, []);

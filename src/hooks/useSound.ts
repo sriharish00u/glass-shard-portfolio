@@ -382,19 +382,27 @@ export function useSound() {
     start();
     ensureStarted();
     const now = Tone.now();
-    const src = new Tone.Noise("white");
-    const filter = new Tone.Filter(4000, "bandpass").connect(_master);
+    const src = new Tone.Noise("pink");
+    const filter = new Tone.Filter(2000, "lowpass").connect(_master);
     src.connect(filter);
-    const env = new Tone.AmplitudeEnvelope({ attack: 0.005, decay: 0.04, release: 0 }).connect(
+    const env = new Tone.AmplitudeEnvelope({ attack: 0.01, decay: 0.03, release: 0 }).connect(
       _master,
     );
     filter.connect(env);
-    const amp = new Tone.Gain(0.02);
+    const amp = new Tone.Gain(0.008);
     env.connect(amp);
     src.start(now);
     env.triggerAttack(now);
     env.triggerRelease(now + 0.04);
     src.stop(now + 0.1);
+  }, [start]);
+
+  const playPageFlip = useCallback(() => {
+    start();
+    ensureStarted();
+    shortNoise({ duration: 0.04, freq: 2500, gain: 0.02 });
+    setTimeout(() => shortNoise({ duration: 0.03, freq: 3000, gain: 0.018 }), 45);
+    setTimeout(() => shortTone({ freq: 200, duration: 0.025, type: "sine", gain: 0.012 }), 25);
   }, [start]);
 
   const playWaterPour = useCallback(() => {
@@ -508,6 +516,7 @@ export function useSound() {
     playDidic,
     playTick,
     playSoftTyping,
+    playPageFlip,
     playAmbientStart,
     playAmbientStop,
     playScrollWind,

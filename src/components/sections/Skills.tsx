@@ -207,7 +207,22 @@ export function Skills() {
   const targetRef = useRef<number | null>(null);
   const angleRef = useRef(0);
   const sizeRef = useRef({ container: 480, radius: 220 });
+  const sectionRef = useRef<HTMLElement>(null);
+  const inViewRef = useRef(false);
   const { playTick } = useSound();
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        inViewRef.current = e.isIntersecting;
+      },
+      { threshold: 0.3 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -218,6 +233,35 @@ export function Skills() {
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
+  }, []);
+
+  useEffect(() => {
+    let raf = 0;
+    const step = (Math.PI * 2) / SKILLS.length;
+    const tick = () => {
+      if (targetRef.current !== null) {
+        const diff = targetRef.current - angleRef.current;
+        angleRef.current += diff * 0.1;
+        if (Math.abs(diff) < 0.001) {
+          angleRef.current = targetRef.current;
+          targetRef.current = null;
+        }
+      } else {
+        const prev = angleRef.current;
+        angleRef.current += 0.003;
+        const prevSlot = Math.floor(
+          (((prev % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) / step,
+        );
+        const currSlot = Math.floor(
+          (((angleRef.current % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) / step,
+        );
+        if (prevSlot !== currSlot && inViewRef.current) playTick();
+      }
+      setAngle(angleRef.current);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   useEffect(() => {
@@ -281,7 +325,11 @@ export function Skills() {
   const cy = container / 2;
 
   return (
-    <section data-section="skills" className="min-h-[80vh] flex flex-col items-center py-24 px-5">
+    <section
+      ref={sectionRef}
+      data-section="skills"
+      className="min-h-[80vh] flex flex-col items-center py-24 px-5"
+    >
       <div className="reveal w-full max-w-3xl">
         <SectionHeader number="03" title="Skills." align="center" />
       </div>
