@@ -8,11 +8,58 @@ const SOCIALS = [
   { label: "Email", url: "mailto:arishexim011@gmail.com" },
 ];
 
+const Field = ({
+  label,
+  value,
+  onChange,
+  type = "text",
+  textarea = false,
+  onKeyDown,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  type?: string;
+  textarea?: boolean;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
+}) => (
+  <div className="mb-8 group">
+    <label className="block text-[11px] text-[#F59E0B] tracking-[0.2em] uppercase mb-2">
+      {label}
+    </label>
+    <div className="border-b border-[#F5F0E8]/15 pb-1 transition-colors focus-within:border-[#F59E0B]">
+      {textarea ? (
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={onKeyDown}
+          rows={3}
+          className="bg-transparent outline-none text-[#F5F0E8] text-base w-full resize-none min-h-[100px] font-sans"
+        />
+      ) : (
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={onKeyDown}
+          className="bg-transparent outline-none text-[#F5F0E8] text-base w-full font-sans"
+        />
+      )}
+    </div>
+  </div>
+);
+
 export function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const { playClick } = useSound();
+  const { playClick, playFeltTap } = useSound();
+  const keyRef = useRef(0);
+
+  const handleKeyDown = () => {
+    keyRef.current++;
+    if (keyRef.current % 3 === 0) playFeltTap();
+  };
 
   const sendWA = () => {
     if (!name || !message) return;
@@ -30,43 +77,6 @@ export function Contact() {
       "_blank",
     );
   };
-
-  const Field = ({
-    label,
-    value,
-    onChange,
-    type = "text",
-    textarea = false,
-  }: {
-    label: string;
-    value: string;
-    onChange: (v: string) => void;
-    type?: string;
-    textarea?: boolean;
-  }) => (
-    <div className="mb-8 group">
-      <label className="block text-[11px] text-[#F59E0B] tracking-[0.2em] uppercase mb-2">
-        {label}
-      </label>
-      <div className="border-b border-[#F5F0E8]/15 pb-1 transition-colors focus-within:border-[#F59E0B]">
-        {textarea ? (
-          <textarea
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            rows={3}
-            className="bg-transparent outline-none text-[#F5F0E8] text-base w-full resize-none min-h-[100px] font-sans"
-          />
-        ) : (
-          <input
-            type={type}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="bg-transparent outline-none text-[#F5F0E8] text-base w-full font-sans"
-          />
-        )}
-      </div>
-    </div>
-  );
 
   return (
     <section data-section="contact" className="min-h-[80vh] py-24 px-5 md:px-[80px]">
