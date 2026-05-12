@@ -30,18 +30,22 @@ function ensureStarted() {
 
 function shortNoise({ duration, freq, gain }: { duration: number; freq?: number; gain?: number }) {
   const now = Tone.now();
+  const g = gain ?? 0.05;
   const src = new Tone.Noise("white");
+  const gainNode = new Tone.Gain(g).connect(_master);
   const env = new Tone.AmplitudeEnvelope({
     attack: 0.002,
     decay: duration,
     release: 0,
-  }).connect(_master);
+  }).connect(gainNode);
   src.connect(env);
   if (freq) {
-    const filter = new Tone.Filter(freq, "bandpass").connect(_master);
+    const filter = new Tone.Filter(freq, "bandpass");
+    filter.connect(gainNode);
+    src.disconnect(env);
     src.connect(filter);
+    filter.connect(env);
   }
-  const g = gain ?? 0.05;
   src.start(now);
   env.triggerAttack(now);
   env.triggerRelease(now + duration);
@@ -158,10 +162,14 @@ export function useSound() {
     shortTone({ freq: 600, duration: 0.08, type: "sine", gain: 0.05 });
   }, [start]);
 
+  const playRotateLastRef = useRef(0);
   const playRotate = useCallback(() => {
+    const now = Date.now();
+    if (now - playRotateLastRef.current < 80) return;
+    playRotateLastRef.current = now;
     start();
     ensureStarted();
-    shortTone({ freq: 300, duration: 0.12, type: "sine", gain: 0.04 });
+    shortTone({ freq: 420, duration: 0.06, type: "triangle", gain: 0.025 });
   }, [start]);
 
   const playShatter = useCallback(() => {
@@ -217,18 +225,6 @@ export function useSound() {
     ensureStarted();
     shortTone({ freq: 300, duration: 0.05, type: "sine", gain: 0.045 });
     shortNoise({ duration: 0.04, freq: 2000, gain: 0.02 });
-  }, [start]);
-
-  const playSectionChange = useCallback(() => {
-    start();
-    ensureStarted();
-    noiseSweep({ duration: 0.4, fLow: 100, fHigh: 300, gain: 0.025, type: "brown" });
-  }, [start]);
-
-  const playWind = useCallback(() => {
-    start();
-    ensureStarted();
-    noiseSweep({ duration: 0.3, fLow: 200, fHigh: 600, gain: 0.02, type: "pink" });
   }, [start]);
 
   const playIceCrack = useCallback(() => {
@@ -423,18 +419,6 @@ export function useSound() {
     playCursorHover,
     playCursorExpand,
     playWoodTap,
-    playSectionChange,
-    playWind,
-    playIceCrack,
-    playBambooKnock,
-    playWoodCreak,
-    playStoneClick,
-    playWoodSlide,
-    playPaperShuffle,
-    playBlockSettle,
-    playExhale,
-    playWoodTick,
-    playSingingBowl,
     playWindChime,
     playWaterDrop,
     playAirPuff,

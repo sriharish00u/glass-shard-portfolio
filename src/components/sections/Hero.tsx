@@ -247,6 +247,8 @@ function RubiksCube({ onRotate }: { onRotate?: () => void }) {
   resumeAutoRef.current = resumeAutoRotate;
   const handleUndoRef = useRef(handleUndo);
   handleUndoRef.current = handleUndo;
+  const onRotateRef = useRef(onRotate);
+  onRotateRef.current = onRotate;
 
   // Three.js setup — runs once
   useEffect(() => {
@@ -514,7 +516,7 @@ function RubiksCube({ onRotate }: { onRotate?: () => void }) {
           if (Math.abs(angle) > 0.001) {
             moveHistory.current.push({ axis: snap.axis, layer: snap.layer, angle });
             setMoveCount((c) => c + 1);
-            onRotate?.();
+            onRotateRef.current?.();
           }
           snapAnim.current = null;
           layerDrag.current = null;
