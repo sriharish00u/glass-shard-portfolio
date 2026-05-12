@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
+import { useSound } from "@/hooks/useSound";
 
 export function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
+  const { playCursorHover } = useSound();
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
@@ -12,6 +14,7 @@ export function Cursor() {
     let trailX = dotX;
     let trailY = dotY;
     let raf = 0;
+    let hoverThrottle = 0;
 
     const onMove = (e: MouseEvent) => {
       dotX = e.clientX;
@@ -32,7 +35,14 @@ export function Cursor() {
     };
     raf = requestAnimationFrame(tick);
 
-    const enter = () => trailRef.current?.classList.add("hover");
+    const enter = () => {
+      trailRef.current?.classList.add("hover");
+      const now = Date.now();
+      if (now - hoverThrottle > 200) {
+        hoverThrottle = now;
+        playCursorHover();
+      }
+    };
     const leave = () => trailRef.current?.classList.remove("hover");
 
     const targets = document.querySelectorAll("a, button, input, textarea, [data-hover]");

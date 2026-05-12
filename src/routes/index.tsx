@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Cursor } from "@/components/Cursor";
 import { SideNav } from "@/components/SideNav";
 import { GlassBreak } from "@/components/GlassBreak";
@@ -11,6 +11,7 @@ import { Milestones } from "@/components/sections/Milestones";
 import { Contact } from "@/components/sections/Contact";
 import { useScrollSection } from "@/hooks/useScrollSection";
 import { useReveal } from "@/hooks/useReveal";
+import { useSound } from "@/hooks/useSound";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -35,6 +36,22 @@ function IndexPage() {
   const ids = useMemo(() => ["hero", "about", "skills", "projects", "milestones", "contact"], []);
   const active = useScrollSection(ids);
   useReveal();
+  const { playScrollWind, stopScrollWind } = useSound();
+  const scrollTimer = useRef<number>(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      playScrollWind();
+      clearTimeout(scrollTimer.current);
+      scrollTimer.current = window.setTimeout(() => stopScrollWind(), 300);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(scrollTimer.current);
+      stopScrollWind();
+    };
+  }, [playScrollWind, stopScrollWind]);
 
   useEffect(() => {
     document.body.style.paddingLeft = window.innerWidth >= 768 ? "56px" : "0";

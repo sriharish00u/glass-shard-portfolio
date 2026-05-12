@@ -96,7 +96,9 @@ export function GlassBreak({ variant = 0 }: { variant?: number }) {
       </svg>
       <div
         className={`absolute left-0 right-0 top-1/2 h-px transition-opacity duration-700 ${broken ? "opacity-100" : "opacity-0"}`}
-        style={{ background: "linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent)" }}
+        style={{
+          background: "linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent)",
+        }}
       />
     </div>
   );

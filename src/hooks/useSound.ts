@@ -7,6 +7,12 @@ let _freeverb: Tone.Freeverb;
 let _master: Tone.Gain;
 let _noise: Tone.Noise;
 let _ambientLoop: Tone.Loop | null = null;
+let _windNodes: {
+  src: Tone.Noise;
+  filter: Tone.Filter;
+  amp: Tone.Gain;
+  sweep: ReturnType<typeof setInterval>;
+} | null = null;
 
 function init() {
   if (_init) return;
@@ -153,7 +159,7 @@ export function useSound() {
   const playClick = useCallback(() => {
     start();
     ensureStarted();
-    shortTone({ freq: 800, duration: 0.04, type: "sine", gain: 0.045 });
+    shortTone({ freq: 1000, duration: 0.02, type: "square", gain: 0.03 });
   }, [start]);
 
   const playPop = useCallback(() => {
@@ -211,7 +217,15 @@ export function useSound() {
   const playCursorHover = useCallback(() => {
     start();
     ensureStarted();
-    shortTone({ freq: 800, duration: 0.08, type: "sine", gain: 0.04 });
+    const now = Tone.now();
+    const osc = new Tone.Oscillator(160, "sine");
+    const amp = new Tone.Gain(0.035).connect(_master);
+    osc.connect(amp);
+    amp.gain.setValueAtTime(0.035, now);
+    amp.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    osc.frequency.linearRampToValueAtTime(280, now + 0.12);
+    osc.start(now);
+    osc.stop(now + 0.15);
   }, [start]);
 
   const playCursorExpand = useCallback(() => {
@@ -357,6 +371,32 @@ export function useSound() {
     shortTone({ freq: 240, duration: 0.04, type: "sine", gain: 0.035 });
   }, [start]);
 
+  const playTick = useCallback(() => {
+    start();
+    ensureStarted();
+    shortTone({ freq: 600, duration: 0.03, type: "triangle", gain: 0.025 });
+    shortNoise({ duration: 0.02, freq: 3000, gain: 0.015 });
+  }, [start]);
+
+  const playSoftTyping = useCallback(() => {
+    start();
+    ensureStarted();
+    const now = Tone.now();
+    const src = new Tone.Noise("white");
+    const filter = new Tone.Filter(4000, "bandpass").connect(_master);
+    src.connect(filter);
+    const env = new Tone.AmplitudeEnvelope({ attack: 0.005, decay: 0.04, release: 0 }).connect(
+      _master,
+    );
+    filter.connect(env);
+    const amp = new Tone.Gain(0.02);
+    env.connect(amp);
+    src.start(now);
+    env.triggerAttack(now);
+    env.triggerRelease(now + 0.04);
+    src.stop(now + 0.1);
+  }, [start]);
+
   const playWaterPour = useCallback(() => {
     start();
     ensureStarted();
@@ -404,6 +444,44 @@ export function useSound() {
     }
   }, []);
 
+  const playScrollWind = useCallback(() => {
+    start();
+    ensureStarted();
+    if (!_windNodes) {
+      const now = Tone.now();
+      const src = new Tone.Noise("pink");
+      const filter = new Tone.Filter(600, "bandpass");
+      const amp = new Tone.Gain(0).connect(_master);
+      src.connect(filter);
+      filter.connect(amp);
+      amp.gain.rampTo(0.025, 0.3);
+      src.start(now);
+      const sweep = setInterval(() => {
+        if (_windNodes) {
+          const base = 300 + Math.random() * 400;
+          _windNodes.filter.frequency.rampTo(base, 0.3);
+          _windNodes.amp.gain.rampTo(0.015 + Math.random() * 0.015, 0.3);
+        }
+      }, 400);
+      _windNodes = { src, filter, amp, sweep };
+    }
+  }, [start]);
+
+  const stopScrollWind = useCallback(() => {
+    if (_windNodes) {
+      const { src, amp, sweep } = _windNodes;
+      amp.gain.rampTo(0, 0.4);
+      clearInterval(sweep);
+      setTimeout(() => {
+        src.stop();
+        src.dispose();
+        _windNodes?.filter.dispose();
+        _windNodes?.amp.dispose();
+        _windNodes = null;
+      }, 500);
+    }
+  }, []);
+
   return {
     start,
     playClick,
@@ -428,7 +506,11 @@ export function useSound() {
     playFeltTap,
     playWaterPour,
     playDidic,
+    playTick,
+    playSoftTyping,
     playAmbientStart,
     playAmbientStop,
+    playScrollWind,
+    stopScrollWind,
   };
 }

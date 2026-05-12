@@ -207,8 +207,7 @@ export function Skills() {
   const targetRef = useRef<number | null>(null);
   const angleRef = useRef(0);
   const sizeRef = useRef({ container: 480, radius: 220 });
-  const { playPop, playDidic } = useSound();
-  const didicThrottle = useRef(0);
+  const { playTick } = useSound();
 
   useEffect(() => {
     const update = () => {
@@ -223,20 +222,25 @@ export function Skills() {
 
   useEffect(() => {
     let raf = 0;
+    const step = (Math.PI * 2) / SKILLS.length;
     const tick = () => {
       if (targetRef.current !== null) {
         const diff = targetRef.current - angleRef.current;
         angleRef.current += diff * 0.1;
-        didicThrottle.current++;
-        if (didicThrottle.current % 18 === 0) playDidic();
         if (Math.abs(diff) < 0.001) {
           angleRef.current = targetRef.current;
           targetRef.current = null;
-          didicThrottle.current = 0;
         }
       } else {
+        const prev = angleRef.current;
         angleRef.current += 0.003;
-        didicThrottle.current = 0;
+        const prevSlot = Math.floor(
+          (((prev % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) / step,
+        );
+        const currSlot = Math.floor(
+          (((angleRef.current % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) / step,
+        );
+        if (prevSlot !== currSlot) playTick();
       }
       setAngle(angleRef.current);
       raf = requestAnimationFrame(tick);
@@ -247,7 +251,7 @@ export function Skills() {
 
   const handleClick = (i: number) => {
     setSelected(i);
-    playPop();
+    playTick();
     const desired = -Math.PI / 2 - (i * (Math.PI * 2)) / SKILLS.length;
     let target = desired;
     while (target - angleRef.current > Math.PI) target -= Math.PI * 2;
@@ -270,7 +274,7 @@ export function Skills() {
     return best;
   }, [angle]);
 
-  const displaySkill = selected !== null ? selected : topIndex;
+  const activeIndex = selected !== null ? selected : topIndex;
 
   const { container, radius } = sizeRef.current;
   const cx = container / 2;
@@ -297,7 +301,7 @@ export function Skills() {
               className="font-serif text-[#F5F0E8]"
               style={{ fontSize: "clamp(22px, 3vw, 32px)" }}
             >
-              {SKILLS[displaySkill]}
+              {SKILLS[activeIndex]}
             </div>
             <div className="mx-auto mt-2 h-[2px] w-10 bg-[#F59E0B]" />
           </div>
@@ -307,7 +311,7 @@ export function Skills() {
           const a = angle + (i * (Math.PI * 2)) / SKILLS.length;
           const x = cx + radius * Math.cos(a);
           const y = cy + radius * Math.sin(a);
-          const isSel = selected === i;
+          const isSel = activeIndex === i;
           return (
             <button
               key={s}

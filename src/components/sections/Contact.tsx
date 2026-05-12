@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SectionHeader } from "./SectionHeader";
 import { useSound } from "@/hooks/useSound";
 
@@ -53,12 +53,12 @@ export function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const { playClick, playFeltTap } = useSound();
+  const { playClick, playSoftTyping } = useSound();
   const keyRef = useRef(0);
 
   const handleKeyDown = () => {
     keyRef.current++;
-    if (keyRef.current % 3 === 0) playFeltTap();
+    if (keyRef.current % 3 === 0) playSoftTyping();
   };
 
   const sendWA = () => {
@@ -86,9 +86,21 @@ export function Contact() {
 
       <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-start">
         <div className="reveal" style={{ "--i": 1 } as React.CSSProperties}>
-          <Field label="Your Name" value={name} onChange={setName} />
-          <Field label="Email" value={email} onChange={setEmail} type="email" />
-          <Field label="Message" value={message} onChange={setMessage} textarea />
+          <Field label="Your Name" value={name} onChange={setName} onKeyDown={handleKeyDown} />
+          <Field
+            label="Email"
+            value={email}
+            onChange={setEmail}
+            type="email"
+            onKeyDown={handleKeyDown}
+          />
+          <Field
+            label="Message"
+            value={message}
+            onChange={setMessage}
+            textarea
+            onKeyDown={handleKeyDown}
+          />
           <div className="flex gap-3 mt-2">
             <button
               onClick={sendWA}
