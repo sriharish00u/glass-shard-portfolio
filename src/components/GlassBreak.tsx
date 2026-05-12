@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSound } from "@/hooks/useSound";
 
 interface Shard {
   points: string;
@@ -7,19 +8,13 @@ interface Shard {
   rot: number;
 }
 
-const PRESETS: number[][][] = [
-  // Each preset: list of triangles via index seeds; we generate on the fly per variant
-];
-
 function genShards(variant: number, w = 1200, h = 120): Shard[] {
-  // Deterministic pseudo-random per variant
   let seed = variant * 9301 + 49297;
   const rnd = () => {
     seed = (seed * 9301 + 49297) % 233280;
     return seed / 233280;
   };
 
-  // Generate ~14 irregular triangles tiling the strip
   const cols = 6;
   const rows = 2;
   const shards: Shard[] = [];
@@ -54,17 +49,22 @@ function genShards(variant: number, w = 1200, h = 120): Shard[] {
 export function GlassBreak({ variant = 0 }: { variant?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [broken, setBroken] = useState(false);
+  const { playShatter } = useSound();
+  const prevBroken = useRef(false);
+
   const shards = useMemo(() => genShards(variant), [variant]);
+
+  useEffect(() => {
+    if (broken && !prevBroken.current) playShatter();
+    prevBroken.current = broken;
+  }, [broken, playShatter]);
 
   useEffect(() => {
     if (!ref.current) return;
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setBroken(true);
-            obs.disconnect();
-          }
+          setBroken(e.isIntersecting);
         });
       },
       { threshold: 0.3 },
@@ -102,10 +102,11 @@ export function GlassBreak({ variant = 0 }: { variant?: number }) {
           />
         ))}
       </svg>
-      {/* Faint amber crack line */}
       <div
         className={`absolute left-0 right-0 top-1/2 h-px transition-opacity duration-700 ${broken ? "opacity-100" : "opacity-0"}`}
-        style={{ background: "linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent)" }}
+        style={{
+          background: "linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent)",
+        }}
       />
     </div>
   );

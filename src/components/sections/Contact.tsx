@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SectionHeader } from "./SectionHeader";
+import { useSound } from "@/hooks/useSound";
 
 const SOCIALS = [
   { label: "GitHub", url: "https://github.com/sriharish00u" },
@@ -11,14 +12,19 @@ export function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const { playClick } = useSound();
 
-  const submit = () => {
+  const sendWA = () => {
     if (!name || !message) return;
-    const waText = encodeURIComponent(
-      `Hi Jay, I'm ${name}.\n\n${message}\n\nReply to: ${email}`,
-    );
-    const mailBody = encodeURIComponent(`${message}\n\nFrom: ${name}`);
+    playClick();
+    const waText = encodeURIComponent(`Hi Jay, I'm ${name}.\n\n${message}\n\nReply to: ${email}`);
     window.open(`https://wa.me/?text=${waText}`, "_blank");
+  };
+
+  const sendEmail = () => {
+    if (!name || !message) return;
+    playClick();
+    const mailBody = encodeURIComponent(`${message}\n\nFrom: ${name}`);
     window.open(
       `mailto:arishexim011@gmail.com?subject=Portfolio Inquiry from ${encodeURIComponent(name)}&body=${mailBody}`,
       "_blank",
@@ -42,9 +48,7 @@ export function Contact() {
       <label className="block text-[11px] text-[#F59E0B] tracking-[0.2em] uppercase mb-2">
         {label}
       </label>
-      <div
-        className="border-b border-[#F5F0E8]/15 pb-1 transition-colors focus-within:border-[#F59E0B]"
-      >
+      <div className="border-b border-[#F5F0E8]/15 pb-1 transition-colors focus-within:border-[#F59E0B]">
         {textarea ? (
           <textarea
             value={value}
@@ -65,10 +69,7 @@ export function Contact() {
   );
 
   return (
-    <section
-      data-section="contact"
-      className="min-h-[80vh] py-24 px-5 md:px-[80px]"
-    >
+    <section data-section="contact" className="min-h-[80vh] py-24 px-5 md:px-[80px]">
       <div className="reveal mb-14">
         <SectionHeader number="05" title="Contact." />
       </div>
@@ -78,12 +79,20 @@ export function Contact() {
           <Field label="Your Name" value={name} onChange={setName} />
           <Field label="Email" value={email} onChange={setEmail} type="email" />
           <Field label="Message" value={message} onChange={setMessage} textarea />
-          <button
-            onClick={submit}
-            className="w-full bg-[#F59E0B] text-[#0A0A0A] font-bold py-3.5 rounded-sm text-[15px] hover:bg-[#D97706] transition-colors mt-2"
-          >
-            Send Message
-          </button>
+          <div className="flex gap-3 mt-2">
+            <button
+              onClick={sendWA}
+              className="flex-1 bg-[#F59E0B] text-[#0A0A0A] font-bold py-3.5 rounded-sm text-[14px] hover:bg-[#D97706] transition-colors"
+            >
+              WhatsApp ↗
+            </button>
+            <button
+              onClick={sendEmail}
+              className="flex-1 border border-[#F5F0E8]/30 text-[#F5F0E8] font-bold py-3.5 rounded-sm text-[14px] hover:border-[#F59E0B] hover:text-[#F59E0B] transition-colors"
+            >
+              Email ↗
+            </button>
+          </div>
         </div>
 
         <div className="reveal" style={{ "--i": 2 } as React.CSSProperties}>
@@ -100,16 +109,19 @@ export function Contact() {
                 onClick={() => window.open(s.url, "_blank")}
                 className="flex items-center justify-between pb-5 border-b border-[#F5F0E8]/10 group text-left"
               >
-                <span className="social-link font-serif text-[#F5F0E8]" style={{ fontSize: "clamp(22px, 3vw, 32px)" }}>
+                <span
+                  className="social-link font-serif text-[#F5F0E8]"
+                  style={{ fontSize: "clamp(22px, 3vw, 32px)" }}
+                >
                   {s.label}
                 </span>
-                <span className="text-[#F59E0B] text-xl group-hover:translate-x-1 transition-transform">↗</span>
+                <span className="text-[#F59E0B] text-xl group-hover:translate-x-1 transition-transform">
+                  ↗
+                </span>
               </button>
             ))}
           </div>
-          <p className="text-xs text-[#F5F0E8]/35 mt-10">
-            Based in Coimbatore, Tamil Nadu, India
-          </p>
+          <p className="text-xs text-[#F5F0E8]/35 mt-10">Based in Coimbatore, Tamil Nadu, India</p>
         </div>
       </div>
     </section>

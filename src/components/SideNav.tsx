@@ -1,18 +1,22 @@
 import { useState } from "react";
 import profile from "@/assets/profile.jpg";
+import { useSound } from "@/hooks/useSound";
 
 const SECTIONS = [
   { id: "hero", label: "Home" },
   { id: "about", label: "About" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
+  { id: "milestones", label: "Milestones" },
   { id: "contact", label: "Contact" },
 ];
 
 export function SideNav({ active }: { active: string }) {
   const [open, setOpen] = useState(false);
+  const { playClick } = useSound();
 
   const scrollTo = (id: string) => {
+    playClick();
     document.querySelector(`[data-section="${id}"]`)?.scrollIntoView({ behavior: "smooth" });
     setOpen(false);
   };
@@ -25,9 +29,13 @@ export function SideNav({ active }: { active: string }) {
         className="md:hidden fixed top-4 left-4 z-[110] w-10 h-10 flex flex-col items-center justify-center gap-1.5 bg-[#0A0A0A]/80 backdrop-blur border border-white/10 rounded"
         aria-label="Toggle navigation"
       >
-        <span className={`block w-5 h-px bg-[#F5F0E8] transition ${open ? "rotate-45 translate-y-[6px]" : ""}`} />
+        <span
+          className={`block w-5 h-px bg-[#F5F0E8] transition ${open ? "rotate-45 translate-y-[6px]" : ""}`}
+        />
         <span className={`block w-5 h-px bg-[#F5F0E8] transition ${open ? "opacity-0" : ""}`} />
-        <span className={`block w-5 h-px bg-[#F5F0E8] transition ${open ? "-rotate-45 -translate-y-[6px]" : ""}`} />
+        <span
+          className={`block w-5 h-px bg-[#F5F0E8] transition ${open ? "-rotate-45 -translate-y-[6px]" : ""}`}
+        />
       </button>
 
       <aside

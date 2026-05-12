@@ -33,9 +33,7 @@ export function SectionHeader({
         >
           {title}
         </h2>
-        <div
-          className={`mt-4 h-[2px] w-12 bg-[#F59E0B] ${align === "center" ? "mx-auto" : ""}`}
-        />
+        <div className={`mt-4 h-[2px] w-12 bg-[#F59E0B] ${align === "center" ? "mx-auto" : ""}`} />
       </div>
     </div>
   );

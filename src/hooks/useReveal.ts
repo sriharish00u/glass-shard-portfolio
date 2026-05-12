@@ -8,7 +8,8 @@ export function useReveal() {
         entries.forEach((e) => {
           if (e.isIntersecting) {
             e.target.classList.add("revealed");
-            obs.unobserve(e.target);
+          } else {
+            e.target.classList.remove("revealed");
           }
         });
       },

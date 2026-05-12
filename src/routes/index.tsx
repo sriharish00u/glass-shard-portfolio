@@ -7,6 +7,7 @@ import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
+import { Milestones } from "@/components/sections/Milestones";
 import { Contact } from "@/components/sections/Contact";
 import { useScrollSection } from "@/hooks/useScrollSection";
 import { useReveal } from "@/hooks/useReveal";
@@ -31,7 +32,7 @@ export const Route = createFileRoute("/")({
 });
 
 function IndexPage() {
-  const ids = useMemo(() => ["hero", "about", "skills", "projects", "contact"], []);
+  const ids = useMemo(() => ["hero", "about", "skills", "projects", "milestones", "contact"], []);
   const active = useScrollSection(ids);
   useReveal();
 
@@ -57,6 +58,8 @@ function IndexPage() {
       <GlassBreak variant={2} />
       <Projects />
       <GlassBreak variant={3} />
+      <Milestones />
+      <GlassBreak variant={4} />
       <Contact />
 
       <footer className="text-center py-10 text-[#F5F0E8]/30 text-xs tracking-[0.25em] uppercase">
