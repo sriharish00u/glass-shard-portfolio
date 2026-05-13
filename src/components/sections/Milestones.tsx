@@ -234,7 +234,7 @@ export function Milestones() {
                     <img
                       src={new URL(`/src/assets/${c.image}`, import.meta.url).href}
                       alt={`${c.type}: ${c.title}`}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-contain p-4"
                       style={{ animation: "fadeContent 0.5s ease" }}
                     />
                 )}

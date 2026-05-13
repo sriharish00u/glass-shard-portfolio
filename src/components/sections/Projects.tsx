@@ -22,7 +22,7 @@ function ProjectCard({ p, idx }: { p: Project; idx: number }) {
           <img
             src={new URL(`/src/assets/${p.image}`, import.meta.url).href}
             alt={p.name}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-contain"
           />
         )}
         <div className="absolute inset-0 pointer-events-none transition-shadow duration-300 group-hover:shadow-[inset_3px_0_0_#F59E0B]" />
