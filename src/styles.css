@@ -152,6 +152,18 @@ body { scrollbar-width: none; }
   transform-origin: left;
 }
 
+/* Mobile responsive section spacing */
+@media (max-width: 767px) {
+  [data-section] {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+  [data-section="hero"] {
+    padding-top: 32px !important;
+    padding-bottom: 24px !important;
+  }
+}
+
 input:-webkit-autofill,
 textarea:-webkit-autofill {
   -webkit-text-fill-color: #F5F0E8;

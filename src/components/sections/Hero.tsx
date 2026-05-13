@@ -567,7 +567,7 @@ function RubiksCube({ onRotate }: { onRotate?: () => void }) {
   const disabled = shuffling || fixing || isAnimating.current || snapAnim.current !== null;
 
   return (
-    <div ref={mountRef} className="w-full h-[420px] md:h-[500px] relative select-none">
+    <div ref={mountRef} className="w-full h-[320px] md:h-[500px] relative select-none" style={{ touchAction: "none" }}>
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
         <button
           onClick={handleShuffle}

@@ -9,6 +9,25 @@ import { Cursor } from "./components/Cursor";
 import { SideNav } from "./components/SideNav";
 import { useReveal } from "./hooks/useReveal";
 import { useScrollSection } from "./hooks/useScrollSection";
+import { useEffect, useRef } from "react";
+import { useSound } from "./hooks/useSound";
+
+function GlobalClickHandler() {
+  const { playClick } = useSound();
+  const lastClick = useRef(0);
+  useEffect(() => {
+    const onClick = () => {
+      const now = Date.now();
+      if (now - lastClick.current > 120) {
+        lastClick.current = now;
+        playClick();
+      }
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [playClick]);
+  return null;
+}
 
 const SECTIONS = ["hero", "about", "skills", "projects", "milestones", "contact"];
 
@@ -19,6 +38,7 @@ export default function App() {
   return (
     <>
       <Cursor />
+      <GlobalClickHandler />
       <SideNav active={active} />
 
       <main>

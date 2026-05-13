@@ -156,19 +156,12 @@ export function Milestones() {
 
       {/* Stacked deck + arrows */}
       <div
-        className="reveal relative flex items-center justify-center gap-6 md:gap-10 mt-16 w-full"
+        className="reveal relative flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10 mt-16 w-full"
         style={{ "--i": 1 } as React.CSSProperties}
       >
-        {/* Left arrow */}
-        <div
-          className={`transition-opacity duration-300 ${canGoPrev ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-        >
-          <Arrow dir="left" onClick={goPrev} onHover={playPop} />
-        </div>
-
         {/* Card stack */}
         <div
-          className="relative w-full"
+          className="relative w-full max-w-[90vw] md:max-w-none"
           style={{
             maxWidth: CARD_W,
             aspectRatio: `${CARD_W} / ${CARD_H}`,
@@ -230,24 +223,68 @@ export function Milestones() {
                 )}
 
                 {/* Content */}
-                  {isActive && c.image && (
-                    <img
-                      src={new URL(`/src/assets/${c.image}`, import.meta.url).href}
-                      alt={`${c.type}: ${c.title}`}
-                      className="absolute inset-0 w-full h-full object-contain p-4"
-                      style={{ animation: "fadeContent 0.5s ease" }}
-                    />
+                {isActive && (
+                  <div
+                    className="relative flex flex-col justify-between h-full p-6 md:p-8"
+                    style={{ animation: "fadeContent 0.5s ease" }}
+                  >
+                    <div>
+                      <div
+                        className="text-[11px] tracking-[0.25em] text-[#F59E0B] uppercase mb-3"
+                        style={{ fontFamily: "Outfit, sans-serif" }}
+                      >
+                        {c.type}
+                      </div>
+                      <h3
+                        className="font-serif text-[#F5F0E8]"
+                        style={{
+                          fontSize: "clamp(24px, 3.2vw, 36px)",
+                          lineHeight: 1.1,
+                          letterSpacing: "-0.01em",
+                        }}
+                      >
+                        {c.title}
+                      </h3>
+                    </div>
+                    <div
+                      className="text-[13px] text-[#F5F0E8]/40"
+                      style={{ fontFamily: "Outfit, sans-serif", letterSpacing: "0.02em" }}
+                    >
+                      {c.subtitle}
+                    </div>
+                  </div>
                 )}
               </div>
             );
           })}
         </div>
 
-        {/* Right arrow */}
-        <div
-          className={`transition-opacity duration-300 ${canGoNext ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-        >
-          <Arrow dir="right" onClick={goNext} onHover={playPop} />
+        {/* Arrows below card on mobile, beside on desktop */}
+        <div className="flex md:hidden items-center justify-center gap-6 mt-2">
+          <div
+            className={`transition-opacity duration-300 ${canGoPrev ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          >
+            <Arrow dir="left" onClick={goPrev} onHover={playPop} />
+          </div>
+          <div
+            className={`transition-opacity duration-300 ${canGoNext ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          >
+            <Arrow dir="right" onClick={goNext} onHover={playPop} />
+          </div>
+        </div>
+
+        {/* Desktop arrows */}
+        <div className="hidden md:flex items-center gap-4">
+          <div
+            className={`transition-opacity duration-300 ${canGoPrev ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          >
+            <Arrow dir="left" onClick={goPrev} onHover={playPop} />
+          </div>
+          <div
+            className={`transition-opacity duration-300 ${canGoNext ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          >
+            <Arrow dir="right" onClick={goNext} onHover={playPop} />
+          </div>
         </div>
       </div>
 
