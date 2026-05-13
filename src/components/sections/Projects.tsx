@@ -62,19 +62,26 @@ function ProjectCard({ p, idx }: { p: Project; idx: number }) {
           ))}
         </div>
         <div className="flex flex-wrap gap-6 mt-7 text-sm font-medium">
-          {p.live && (
+          {p.liveComingSoon ? (
+            <button onClick={() => alert("coming soon")} className="story-link text-[#F59E0B]">
+              → View Project
+            </button>
+          ) : p.live && (
             <a href={p.live} target="_blank" rel="noreferrer" className="story-link text-[#F59E0B]">
               → View Project
             </a>
           )}
-          <a
-            href={p.github}
-            target="_blank"
-            rel="noreferrer"
-            className="story-link text-[#F5F0E8]/70 hover:text-[#F5F0E8]"
-          >
-            GitHub ↗
-          </a>
+          {p.githubs.map((gh, i) => (
+            <a
+              key={i}
+              href={gh}
+              target="_blank"
+              rel="noreferrer"
+              className="story-link text-[#F5F0E8]/70 hover:text-[#F5F0E8]"
+            >
+              {i === 0 ? "GitHub ↗" : `${gh.split("/").pop()} ↗`}
+            </a>
+          ))}
         </div>
       </div>
     </article>
