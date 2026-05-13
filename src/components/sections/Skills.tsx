@@ -28,7 +28,17 @@ const SkillIcon = ({ name }: { name: string }) => {
     HTML: (
       <Svg>
         <rect x="2" y="2" width="20" height="20" rx="4" fill="#E44D26" />
-        <text x="12" y="17" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold" fontFamily="monospace">H</text>
+        <text
+          x="12"
+          y="17"
+          textAnchor="middle"
+          fill="white"
+          fontSize="14"
+          fontWeight="bold"
+          fontFamily="monospace"
+        >
+          H
+        </text>
       </Svg>
     ),
     CSS: (
@@ -39,43 +49,133 @@ const SkillIcon = ({ name }: { name: string }) => {
     JavaScript: (
       <Svg>
         <rect x="2" y="2" width="20" height="20" rx="2" fill="#F7DF1E" />
-        <text x="12" y="16" textAnchor="middle" fill="#000" fontSize="10" fontWeight="bold" fontFamily="monospace">JS</text>
+        <text
+          x="12"
+          y="16"
+          textAnchor="middle"
+          fill="#000"
+          fontSize="10"
+          fontWeight="bold"
+          fontFamily="monospace"
+        >
+          JS
+        </text>
       </Svg>
     ),
     Python: (
       <Svg>
-        <path d="M9 4h6c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="#3776AB" />
+        <path
+          d="M9 4h6c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+          fill="#3776AB"
+        />
         <path d="M9 2h6c1.1 0 2 .9 2 2v1H7V4c0-1.1.9-2 2-2z" fill="#FFD43B" />
-        <text x="12" y="17" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" fontFamily="monospace">Py</text>
+        <text
+          x="12"
+          y="17"
+          textAnchor="middle"
+          fill="white"
+          fontSize="10"
+          fontWeight="bold"
+          fontFamily="monospace"
+        >
+          Py
+        </text>
       </Svg>
     ),
     Java: (
       <Svg>
         <path d="M5 3h14v9c0 3.3-2.2 6-5.5 6h-3C7.2 18 5 15.3 5 12V3z" fill="#ED1D25" />
-        <path d="M17 6h2c1.7 0 3 1.1 3 3s-1.3 3-3 3h-2" fill="none" stroke="#ED1D25" strokeWidth="1.2" />
-        <text x="10" y="15" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" fontFamily="monospace">J</text>
+        <path
+          d="M17 6h2c1.7 0 3 1.1 3 3s-1.3 3-3 3h-2"
+          fill="none"
+          stroke="#ED1D25"
+          strokeWidth="1.2"
+        />
+        <text
+          x="10"
+          y="15"
+          textAnchor="middle"
+          fill="white"
+          fontSize="10"
+          fontWeight="bold"
+          fontFamily="monospace"
+        >
+          J
+        </text>
       </Svg>
     ),
     SQL: (
       <Svg>
         <ellipse cx="12" cy="6" rx="8" ry="3" fill="#A0A0A0" />
-        <path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6" fill="none" stroke="#A0A0A0" strokeWidth="1.2" />
+        <path
+          d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"
+          fill="none"
+          stroke="#A0A0A0"
+          strokeWidth="1.2"
+        />
         <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" fill="none" stroke="#A0A0A0" strokeWidth="1.2" />
-        <text x="12" y="17" textAnchor="middle" fill="#A0A0A0" fontSize="10" fontWeight="bold" fontFamily="monospace">S</text>
+        <text
+          x="12"
+          y="17"
+          textAnchor="middle"
+          fill="#A0A0A0"
+          fontSize="10"
+          fontWeight="bold"
+          fontFamily="monospace"
+        >
+          S
+        </text>
       </Svg>
     ),
     "React Basics": (
       <Svg>
         <circle cx="12" cy="12" r="3" fill="#61DAFB" />
-        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.2" fill="none" transform="rotate(0 12 12)" />
-        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.2" fill="none" transform="rotate(60 12 12)" />
-        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.2" fill="none" transform="rotate(120 12 12)" />
+        <ellipse
+          cx="12"
+          cy="12"
+          rx="10"
+          ry="4"
+          stroke="#61DAFB"
+          strokeWidth="1.2"
+          fill="none"
+          transform="rotate(0 12 12)"
+        />
+        <ellipse
+          cx="12"
+          cy="12"
+          rx="10"
+          ry="4"
+          stroke="#61DAFB"
+          strokeWidth="1.2"
+          fill="none"
+          transform="rotate(60 12 12)"
+        />
+        <ellipse
+          cx="12"
+          cy="12"
+          rx="10"
+          ry="4"
+          stroke="#61DAFB"
+          strokeWidth="1.2"
+          fill="none"
+          transform="rotate(120 12 12)"
+        />
       </Svg>
     ),
     "Node.js Basics": (
       <Svg>
         <polygon points="12,3 21,8 21,16 12,21 3,16 3,8" fill="#339933" />
-        <text x="12" y="16" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="monospace">N</text>
+        <text
+          x="12"
+          y="16"
+          textAnchor="middle"
+          fill="white"
+          fontSize="11"
+          fontWeight="bold"
+          fontFamily="monospace"
+        >
+          N
+        </text>
       </Svg>
     ),
     "Git & GitHub": (
@@ -89,21 +189,43 @@ const SkillIcon = ({ name }: { name: string }) => {
     ),
     "UI Design": (
       <Svg>
-        <path d="M12 2l-3 5-5 1 3.5 3.5L6 20l6-4 6 4-1.5-8.5L20 8l-5-1-3-5z" fill="none" stroke="#A855F7" strokeWidth="1.2" strokeLinejoin="round" />
+        <path
+          d="M12 2l-3 5-5 1 3.5 3.5L6 20l6-4 6 4-1.5-8.5L20 8l-5-1-3-5z"
+          fill="none"
+          stroke="#A855F7"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+        />
         <circle cx="12" cy="10" r="2" fill="#A855F7" />
       </Svg>
     ),
     "Problem Solving": (
       <Svg>
-        <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="#14B8A6" strokeWidth="1.3" strokeLinejoin="round" />
-        <polygon points="12,2 22,7 12,12 2,7" fill="none" stroke="#14B8A6" strokeWidth="1" strokeLinejoin="round" />
+        <polygon
+          points="12,2 22,7 22,17 12,22 2,17 2,7"
+          fill="none"
+          stroke="#14B8A6"
+          strokeWidth="1.3"
+          strokeLinejoin="round"
+        />
+        <polygon
+          points="12,2 22,7 12,12 2,7"
+          fill="none"
+          stroke="#14B8A6"
+          strokeWidth="1"
+          strokeLinejoin="round"
+        />
         <line x1="12" y1="12" x2="12" y2="22" stroke="#14B8A6" strokeWidth="1" />
       </Svg>
     ),
     "AI-assisted Development": (
       <Svg>
         <path d="M12 3l1.5 4L18 8.5l-4.5 1L12 14l-1.5-4.5L6 8.5l4.5-1.5L12 3z" fill="#F59E0B" />
-        <path d="M12 14l1.5 3 3 1-3 1.5L12 23l-1.5-3.5-3-1.5 3-1 1.5-3z" fill="#F59E0B" opacity="0.5" />
+        <path
+          d="M12 14l1.5 3 3 1-3 1.5L12 23l-1.5-3.5-3-1.5 3-1 1.5-3z"
+          fill="#F59E0B"
+          opacity="0.5"
+        />
       </Svg>
     ),
   };

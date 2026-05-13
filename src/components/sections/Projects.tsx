@@ -66,10 +66,17 @@ function ProjectCard({ p, idx }: { p: Project; idx: number }) {
             <button onClick={() => alert("coming soon")} className="story-link text-[#F59E0B]">
               → View Project
             </button>
-          ) : p.live && (
-            <a href={p.live} target="_blank" rel="noreferrer" className="story-link text-[#F59E0B]">
-              → View Project
-            </a>
+          ) : (
+            p.live && (
+              <a
+                href={p.live}
+                target="_blank"
+                rel="noreferrer"
+                className="story-link text-[#F59E0B]"
+              >
+                → View Project
+              </a>
+            )
           )}
           {p.githubs.map((gh, i) => (
             <a
