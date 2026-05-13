@@ -382,27 +382,23 @@ export function useSound() {
     start();
     ensureStarted();
     const now = Tone.now();
-    const src = new Tone.Noise("pink");
-    const filter = new Tone.Filter(2000, "lowpass").connect(_master);
-    src.connect(filter);
-    const env = new Tone.AmplitudeEnvelope({ attack: 0.01, decay: 0.03, release: 0 }).connect(
-      _master,
-    );
-    filter.connect(env);
-    const amp = new Tone.Gain(0.008);
-    env.connect(amp);
-    src.start(now);
-    env.triggerAttack(now);
-    env.triggerRelease(now + 0.04);
-    src.stop(now + 0.1);
+    const osc = new Tone.Oscillator(880, "sine");
+    const amp = new Tone.Gain(0.006).connect(_reverb);
+    osc.connect(amp);
+    amp.gain.setValueAtTime(0.006, now);
+    amp.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+    osc.start(now);
+    osc.stop(now + 0.2);
   }, [start]);
 
   const playPageFlip = useCallback(() => {
     start();
     ensureStarted();
-    shortNoise({ duration: 0.04, freq: 2500, gain: 0.02 });
-    setTimeout(() => shortNoise({ duration: 0.03, freq: 3000, gain: 0.018 }), 45);
-    setTimeout(() => shortTone({ freq: 200, duration: 0.025, type: "sine", gain: 0.012 }), 25);
+    shortTone({ freq: 320, duration: 0.03, type: "sine", gain: 0.015, reverb: true });
+    setTimeout(
+      () => shortTone({ freq: 380, duration: 0.02, type: "sine", gain: 0.012, reverb: true }),
+      60,
+    );
   }, [start]);
 
   const playWaterPour = useCallback(() => {
