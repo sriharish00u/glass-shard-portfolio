@@ -17,7 +17,7 @@ export const projects: Project[] = [
     stack: ["React Native", "Expo", "Node.js", "Socket.IO", "MongoDB", "Agora"],
     github: "https://github.com/sriharish00u/HumaNet",
     live: "https://huma-net.vercel.app",
-    image: null,
+    image: "humanet.png",
   },
   {
     id: "02",
@@ -27,7 +27,7 @@ export const projects: Project[] = [
     stack: ["TypeScript", "React", "Node.js", "Drizzle ORM", "Tailwind", "Vite"],
     github: "https://github.com/sriharish00u/ResumePortfolioGenerator",
     live: "https://resume-portfolio-generator-amber.vercel.app",
-    image: null,
+    image: "resume-portfolio-generator.png",
   },
   {
     id: "03",
@@ -37,6 +37,6 @@ export const projects: Project[] = [
     stack: ["HTML", "CSS", "JavaScript"],
     github: "https://github.com/sriharish00u/Yoga",
     live: null,
-    image: null,
+    image: "yoga-trainer.png",
   },
 ];

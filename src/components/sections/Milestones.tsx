@@ -8,6 +8,7 @@ interface MilestoneCard {
   subtitle: string;
   description: string;
   year: string;
+  image?: string;
 }
 
 const CARDS: MilestoneCard[] = [
@@ -18,6 +19,7 @@ const CARDS: MilestoneCard[] = [
     description:
       "Built and presented technical solutions in a competitive collaborative engineering environment focused on rapid execution, system thinking, and real-world problem solving.",
     year: "2026",
+    image: "chakravyuha-hackathon.png",
   },
   {
     type: "CERTIFICATION",
@@ -26,6 +28,7 @@ const CARDS: MilestoneCard[] = [
     description:
       "Frontend and web fundamentals covering HTML, CSS, JavaScript, responsive design, and modern web architecture principles.",
     year: "2026",
+    image: "ibm-web-dev.png",
   },
   {
     type: "CERTIFICATION",
@@ -34,6 +37,7 @@ const CARDS: MilestoneCard[] = [
     description:
       "Backend programming concepts using Java including object-oriented design, application logic, multithreading, and structured development workflows.",
     year: "2026",
+    image: "sololearn-java.png",
   },
   {
     type: "CERTIFICATION",
@@ -42,6 +46,7 @@ const CARDS: MilestoneCard[] = [
     description:
       "Python backend and scripting fundamentals including automation, data structures, modular programming, and problem-solving workflows.",
     year: "2026",
+    image: "sololearn-python.png",
   },
 ];
 
@@ -92,16 +97,14 @@ export function Milestones() {
   const { playPop, playClick, playPageFlip } = useSound();
 
   const goNext = useCallback(() => {
-    if (active >= CARDS.length - 1) return;
     playPageFlip();
-    setActive((a) => a + 1);
-  }, [active, playPageFlip]);
+    setActive((a) => (a + 1) % CARDS.length);
+  }, [playPageFlip]);
 
   const goPrev = useCallback(() => {
-    if (active <= 0) return;
     playPageFlip();
-    setActive((a) => a - 1);
-  }, [active, playPageFlip]);
+    setActive((a) => (a - 1 + CARDS.length) % CARDS.length);
+  }, [playPageFlip]);
 
   const card = CARDS[active];
 
@@ -139,8 +142,8 @@ export function Milestones() {
     };
   };
 
-  const canGoPrev = active > 0;
-  const canGoNext = active < CARDS.length - 1;
+  const canGoPrev = true;
+  const canGoNext = true;
 
   return (
     <section
@@ -227,36 +230,13 @@ export function Milestones() {
                 )}
 
                 {/* Content */}
-                {isActive && (
-                  <div
-                    className="relative flex flex-col justify-between h-full p-6 md:p-8"
-                    style={{ animation: "fadeContent 0.5s ease" }}
-                  >
-                    <div>
-                      <div
-                        className="text-[11px] tracking-[0.25em] text-[#F59E0B] uppercase mb-3"
-                        style={{ fontFamily: "Outfit, sans-serif" }}
-                      >
-                        {c.type}
-                      </div>
-                      <h3
-                        className="font-serif text-[#F5F0E8]"
-                        style={{
-                          fontSize: "clamp(24px, 3.2vw, 36px)",
-                          lineHeight: 1.1,
-                          letterSpacing: "-0.01em",
-                        }}
-                      >
-                        {c.title}
-                      </h3>
-                    </div>
-                    <div
-                      className="text-[13px] text-[#F5F0E8]/40"
-                      style={{ fontFamily: "Outfit, sans-serif", letterSpacing: "0.02em" }}
-                    >
-                      {c.subtitle}
-                    </div>
-                  </div>
+                  {isActive && c.image && (
+                    <img
+                      src={new URL(`/src/assets/${c.image}`, import.meta.url).href}
+                      alt={`${c.type}: ${c.title}`}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{ animation: "fadeContent 0.5s ease" }}
+                    />
                 )}
               </div>
             );

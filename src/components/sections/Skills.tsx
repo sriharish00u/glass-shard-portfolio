@@ -3,18 +3,18 @@ import { SectionHeader } from "./SectionHeader";
 import { useSound } from "@/hooks/useSound";
 
 const SKILLS = [
-  "React Native",
-  "TypeScript",
-  "Node.js",
-  "Express",
-  "MongoDB",
-  "Socket.IO",
-  "Expo",
-  "Tailwind",
-  "Vite",
-  "Three.js",
+  "HTML",
+  "CSS",
+  "JavaScript",
   "Python",
-  "HTML/CSS",
+  "Java",
+  "SQL",
+  "React Basics",
+  "Node.js Basics",
+  "Git & GitHub",
+  "UI Design",
+  "Problem Solving",
+  "AI-assisted Development",
 ];
 
 const Svg = ({ children }: { children: ReactNode }) => (
@@ -25,175 +25,85 @@ const Svg = ({ children }: { children: ReactNode }) => (
 
 const SkillIcon = ({ name }: { name: string }) => {
   const icons: Record<string, ReactNode> = {
-    "React Native": (
+    HTML: (
       <Svg>
-        <circle cx="12" cy="12" r="3" fill="#61DAFB" />
-        <ellipse
-          cx="12"
-          cy="12"
-          rx="10"
-          ry="4"
-          stroke="#61DAFB"
-          strokeWidth="1.2"
-          transform="rotate(0 12 12)"
-          fill="none"
-        />
-        <ellipse
-          cx="12"
-          cy="12"
-          rx="10"
-          ry="4"
-          stroke="#61DAFB"
-          strokeWidth="1.2"
-          transform="rotate(60 12 12)"
-          fill="none"
-        />
-        <ellipse
-          cx="12"
-          cy="12"
-          rx="10"
-          ry="4"
-          stroke="#61DAFB"
-          strokeWidth="1.2"
-          transform="rotate(120 12 12)"
-          fill="none"
-        />
+        <rect x="2" y="2" width="20" height="20" rx="4" fill="#E44D26" />
+        <text x="12" y="17" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold" fontFamily="monospace">H</text>
       </Svg>
     ),
-    TypeScript: (
+    CSS: (
       <Svg>
-        <rect x="2" y="2" width="20" height="20" rx="2" fill="#3178C6" />
-        <text
-          x="12"
-          y="17"
-          textAnchor="middle"
-          fill="white"
-          fontSize="12"
-          fontWeight="bold"
-          fontFamily="monospace"
-        >
-          TS
-        </text>
+        <path d="M12 2C12 2 4 10 4 15c0 4.4 3.6 8 8 8s8-3.6 8-8c0-5-8-13-8-13z" fill="#2965F1" />
       </Svg>
     ),
-    "Node.js": (
+    JavaScript: (
       <Svg>
-        <path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="#339933" />
-        <text
-          x="12"
-          y="16"
-          textAnchor="middle"
-          fill="white"
-          fontSize="8"
-          fontWeight="bold"
-          fontFamily="monospace"
-        >
-          N
-        </text>
-      </Svg>
-    ),
-    Express: (
-      <Svg>
-        <path d="M2 4h20L12 18 2 4z" fill="none" stroke="#F5F0E8" strokeWidth="1.5" />
-        <path d="M12 18L2 4h20L12 18z" fill="none" stroke="#F59E0B" strokeWidth="1" opacity="0.5" />
-      </Svg>
-    ),
-    MongoDB: (
-      <Svg>
-        <ellipse cx="12" cy="14" rx="4" ry="7" fill="#47A248" />
-        <path d="M12 2v5" stroke="#47A248" strokeWidth="2" strokeLinecap="round" />
-      </Svg>
-    ),
-    "Socket.IO": (
-      <Svg>
-        <circle cx="12" cy="12" r="9" stroke="#F5F0E8" strokeWidth="1.2" fill="none" />
-        <path d="M8 16c3-5 5-2 8-7" stroke="#F5F0E8" strokeWidth="1.5" strokeLinecap="round" />
-      </Svg>
-    ),
-    Expo: (
-      <Svg>
-        <circle cx="12" cy="12" r="10" fill="#F5F0E8" />
-        <text
-          x="12"
-          y="17"
-          textAnchor="middle"
-          fill="#0A0A0A"
-          fontSize="13"
-          fontWeight="bold"
-          fontFamily="monospace"
-        >
-          E
-        </text>
-      </Svg>
-    ),
-    Tailwind: (
-      <Svg>
-        <path
-          d="M12 4C7 4 5 7 5 9c2 0 3.5-1 5-1 1.5 0 2.5 1 4 1 2.5 0 4-2 4-4 0 2 1.5 4 4 4 0-2-2-5-5-5-1.5 0-2.5 1-4 1s-2.5-1-4-1z"
-          fill="#38BDF8"
-        />
-        <path
-          d="M5 13c0 2 2 3 4 3 1.5 0 2.5-1 4-1 1.5 0 2.5 1 4 1 2.5 0 4-2 4-4 0 2 1.5 4 4 4 0-2-2-5-5-5-1.5 0-2.5 1-4 1s-2.5-1-4-1c-2.5 0-4 2-4 4z"
-          fill="#38BDF8"
-          opacity="0.5"
-        />
-      </Svg>
-    ),
-    Vite: (
-      <Svg>
-        <path d="M12 2L4 20h4l4-12 4 12h4L12 2z" fill="#A855F7" />
-        <path d="M12 6l-2 6h4l-2 6" fill="#FBBF24" />
-      </Svg>
-    ),
-    "Three.js": (
-      <Svg>
-        <text
-          x="12"
-          y="17"
-          textAnchor="middle"
-          fill="#F5F0E8"
-          fontSize="10"
-          fontWeight="bold"
-          fontFamily="monospace"
-        >
-          3D
-        </text>
+        <rect x="2" y="2" width="20" height="20" rx="2" fill="#F7DF1E" />
+        <text x="12" y="16" textAnchor="middle" fill="#000" fontSize="10" fontWeight="bold" fontFamily="monospace">JS</text>
       </Svg>
     ),
     Python: (
       <Svg>
-        <path
-          d="M9 4h6c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-          fill="#3776AB"
-        />
+        <path d="M9 4h6c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H9c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="#3776AB" />
         <path d="M9 2h6c1.1 0 2 .9 2 2v1H7V4c0-1.1.9-2 2-2z" fill="#FFD43B" />
-        <text
-          x="12"
-          y="17"
-          textAnchor="middle"
-          fill="white"
-          fontSize="10"
-          fontWeight="bold"
-          fontFamily="monospace"
-        >
-          Py
-        </text>
+        <text x="12" y="17" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" fontFamily="monospace">Py</text>
       </Svg>
     ),
-    "HTML/CSS": (
+    Java: (
       <Svg>
-        <rect x="2" y="2" width="20" height="20" rx="2" fill="#E34F26" />
-        <text
-          x="12"
-          y="17"
-          textAnchor="middle"
-          fill="white"
-          fontSize="9"
-          fontWeight="bold"
-          fontFamily="monospace"
-        >
-          H
-        </text>
+        <path d="M5 3h14v9c0 3.3-2.2 6-5.5 6h-3C7.2 18 5 15.3 5 12V3z" fill="#ED1D25" />
+        <path d="M17 6h2c1.7 0 3 1.1 3 3s-1.3 3-3 3h-2" fill="none" stroke="#ED1D25" strokeWidth="1.2" />
+        <text x="10" y="15" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" fontFamily="monospace">J</text>
+      </Svg>
+    ),
+    SQL: (
+      <Svg>
+        <ellipse cx="12" cy="6" rx="8" ry="3" fill="#A0A0A0" />
+        <path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6" fill="none" stroke="#A0A0A0" strokeWidth="1.2" />
+        <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" fill="none" stroke="#A0A0A0" strokeWidth="1.2" />
+        <text x="12" y="17" textAnchor="middle" fill="#A0A0A0" fontSize="10" fontWeight="bold" fontFamily="monospace">S</text>
+      </Svg>
+    ),
+    "React Basics": (
+      <Svg>
+        <circle cx="12" cy="12" r="3" fill="#61DAFB" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.2" fill="none" transform="rotate(0 12 12)" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.2" fill="none" transform="rotate(60 12 12)" />
+        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.2" fill="none" transform="rotate(120 12 12)" />
+      </Svg>
+    ),
+    "Node.js Basics": (
+      <Svg>
+        <polygon points="12,3 21,8 21,16 12,21 3,16 3,8" fill="#339933" />
+        <text x="12" y="16" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="monospace">N</text>
+      </Svg>
+    ),
+    "Git & GitHub": (
+      <Svg>
+        <circle cx="8" cy="7" r="3" fill="none" stroke="#F05033" strokeWidth="1.5" />
+        <circle cx="8" cy="17" r="3" fill="none" stroke="#F05033" strokeWidth="1.5" />
+        <circle cx="17" cy="17" r="3" fill="none" stroke="#F05033" strokeWidth="1.5" />
+        <line x1="8" y1="10" x2="8" y2="14" stroke="#F05033" strokeWidth="1.5" />
+        <line x1="8" y1="14" x2="17" y2="14" stroke="#F05033" strokeWidth="1.5" />
+      </Svg>
+    ),
+    "UI Design": (
+      <Svg>
+        <path d="M12 2l-3 5-5 1 3.5 3.5L6 20l6-4 6 4-1.5-8.5L20 8l-5-1-3-5z" fill="none" stroke="#A855F7" strokeWidth="1.2" strokeLinejoin="round" />
+        <circle cx="12" cy="10" r="2" fill="#A855F7" />
+      </Svg>
+    ),
+    "Problem Solving": (
+      <Svg>
+        <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" fill="none" stroke="#14B8A6" strokeWidth="1.3" strokeLinejoin="round" />
+        <polygon points="12,2 22,7 12,12 2,7" fill="none" stroke="#14B8A6" strokeWidth="1" strokeLinejoin="round" />
+        <line x1="12" y1="12" x2="12" y2="22" stroke="#14B8A6" strokeWidth="1" />
+      </Svg>
+    ),
+    "AI-assisted Development": (
+      <Svg>
+        <path d="M12 3l1.5 4L18 8.5l-4.5 1L12 14l-1.5-4.5L6 8.5l4.5-1.5L12 3z" fill="#F59E0B" />
+        <path d="M12 14l1.5 3 3 1-3 1.5L12 23l-1.5-3.5-3-1.5 3-1 1.5-3z" fill="#F59E0B" opacity="0.5" />
       </Svg>
     ),
   };
@@ -254,7 +164,9 @@ export function Skills() {
         const currSlot = Math.floor(
           (((angleRef.current % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) / step,
         );
-        if (prevSlot !== currSlot && inViewRef.current) playTick();
+        if (prevSlot !== currSlot && inViewRef.current) {
+          // sound handled by useEffect on activeIndex change
+        }
       }
       setAngle(angleRef.current);
       raf = requestAnimationFrame(tick);
@@ -264,7 +176,6 @@ export function Skills() {
   }, []);
 
   const handleClick = (i: number) => {
-    playTick();
     const desired = -Math.PI / 2 - (i * (Math.PI * 2)) / SKILLS.length;
     let target = desired;
     while (target - angleRef.current > Math.PI) target -= Math.PI * 2;
@@ -288,6 +199,16 @@ export function Skills() {
   }, [angle]);
 
   const activeIndex = topIndex;
+
+  const prevActiveRef = useRef(activeIndex);
+  useEffect(() => {
+    if (prevActiveRef.current !== activeIndex && inViewRef.current) {
+      playTick();
+      prevActiveRef.current = activeIndex;
+    } else {
+      prevActiveRef.current = activeIndex;
+    }
+  }, [activeIndex, playTick]);
 
   const { container, radius } = sizeRef.current;
   const cx = container / 2;

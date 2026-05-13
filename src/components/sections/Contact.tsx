@@ -4,7 +4,7 @@ import { useSound } from "@/hooks/useSound";
 
 const SOCIALS = [
   { label: "GitHub", url: "https://github.com/sriharish00u" },
-  { label: "LinkedIn", url: "#" },
+  { label: "LinkedIn", url: "https://www.linkedin.com/in/jay-harish-p-0935b2309/" },
   { label: "Email", url: "mailto:arishexim011@gmail.com" },
 ];
 

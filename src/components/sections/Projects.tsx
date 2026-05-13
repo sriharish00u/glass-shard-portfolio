@@ -18,24 +18,13 @@ function ProjectCard({ p, idx }: { p: Project; idx: number }) {
           backgroundSize: "24px 24px",
         }}
       >
-        <div className="absolute inset-0 flex flex-col items-center justify-center transition-transform duration-500 group-hover:scale-[1.04]">
-          <span
-            className="font-serif"
-            style={{
-              fontSize: "clamp(80px, 14vw, 160px)",
-              color: "rgba(245,158,11,0.15)",
-              lineHeight: 1,
-            }}
-          >
-            {p.id}
-          </span>
-          <span
-            className="font-serif text-[#F5F0E8]/80 -mt-4"
-            style={{ fontSize: "clamp(22px, 3vw, 36px)" }}
-          >
-            {p.name}
-          </span>
-        </div>
+        {p.image && (
+          <img
+            src={new URL(`/src/assets/${p.image}`, import.meta.url).href}
+            alt={p.name}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
         <div className="absolute inset-0 pointer-events-none transition-shadow duration-300 group-hover:shadow-[inset_3px_0_0_#F59E0B]" />
       </div>
 
