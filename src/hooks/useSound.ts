@@ -452,19 +452,24 @@ export function useSound() {
     start();
     ensureStarted();
     if (!_windNodes) {
+      const isMobile = window.innerWidth < 768;
       const now = Tone.now();
       const src = new Tone.Noise("pink");
-      const filter = new Tone.Filter(600, "bandpass");
+      const filter = new Tone.Filter(isMobile ? 400 : 600, "bandpass");
       const amp = new Tone.Gain(0).connect(_master);
       src.connect(filter);
       filter.connect(amp);
-      amp.gain.rampTo(0.025, 0.3);
+      const peakGain = isMobile ? 0.012 : 0.025;
+      amp.gain.rampTo(peakGain, 0.3);
       src.start(now);
       const sweep = setInterval(() => {
         if (_windNodes) {
-          const base = 300 + Math.random() * 400;
+          const base = (isMobile ? 200 : 300) + Math.random() * (isMobile ? 200 : 400);
           _windNodes.filter.frequency.rampTo(base, 0.3);
-          _windNodes.amp.gain.rampTo(0.015 + Math.random() * 0.015, 0.3);
+          _windNodes.amp.gain.rampTo(
+            (isMobile ? 0.008 : 0.015) + Math.random() * (isMobile ? 0.004 : 0.015),
+            0.3,
+          );
         }
       }, 400);
       _windNodes = { src, filter, amp, sweep };
@@ -474,7 +479,7 @@ export function useSound() {
   const stopScrollWind = useCallback(() => {
     if (_windNodes) {
       const { src, amp, sweep } = _windNodes;
-      amp.gain.rampTo(0, 0.4);
+      amp.gain.rampTo(0, 0.15);
       clearInterval(sweep);
       setTimeout(() => {
         src.stop();
@@ -482,7 +487,7 @@ export function useSound() {
         _windNodes?.filter.dispose();
         _windNodes?.amp.dispose();
         _windNodes = null;
-      }, 500);
+      }, 200);
     }
   }, []);
 

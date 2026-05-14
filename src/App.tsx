@@ -36,7 +36,7 @@ function ScrollWind() {
     const onScroll = () => {
       playScrollWind();
       clearTimeout(timer.current);
-      timer.current = window.setTimeout(() => stopScrollWind(), 400);
+      timer.current = window.setTimeout(() => stopScrollWind(), 200);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {

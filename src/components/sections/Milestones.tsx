@@ -222,36 +222,17 @@ export function Milestones() {
                   />
                 )}
 
-                {/* Content */}
-                {isActive && (
+                {/* Certificate image */}
+                {isActive && c.image && (
                   <div
-                    className="relative flex flex-col justify-between h-full p-6 md:p-8"
+                    className="absolute inset-0 flex items-center justify-center p-4"
                     style={{ animation: "fadeContent 0.5s ease" }}
                   >
-                    <div>
-                      <div
-                        className="text-[11px] tracking-[0.25em] text-[#F59E0B] uppercase mb-3"
-                        style={{ fontFamily: "Outfit, sans-serif" }}
-                      >
-                        {c.type}
-                      </div>
-                      <h3
-                        className="font-serif text-[#F5F0E8]"
-                        style={{
-                          fontSize: "clamp(24px, 3.2vw, 36px)",
-                          lineHeight: 1.1,
-                          letterSpacing: "-0.01em",
-                        }}
-                      >
-                        {c.title}
-                      </h3>
-                    </div>
-                    <div
-                      className="text-[13px] text-[#F5F0E8]/40"
-                      style={{ fontFamily: "Outfit, sans-serif", letterSpacing: "0.02em" }}
-                    >
-                      {c.subtitle}
-                    </div>
+                    <img
+                      src={new URL(`/src/assets/${c.image}`, import.meta.url).href}
+                      alt={c.title}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                 )}
               </div>
