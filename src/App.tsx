@@ -29,6 +29,25 @@ function GlobalClickHandler() {
   return null;
 }
 
+function ScrollWind() {
+  const { playScrollWind, stopScrollWind } = useSound();
+  const timer = useRef<number>(0);
+  useEffect(() => {
+    const onScroll = () => {
+      playScrollWind();
+      clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => stopScrollWind(), 400);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(timer.current);
+      stopScrollWind();
+    };
+  }, [playScrollWind, stopScrollWind]);
+  return null;
+}
+
 const SECTIONS = ["hero", "about", "skills", "projects", "milestones", "contact"];
 
 export default function App() {
@@ -39,6 +58,7 @@ export default function App() {
     <>
       <Cursor />
       <GlobalClickHandler />
+      <ScrollWind />
       <SideNav active={active} />
 
       <main>

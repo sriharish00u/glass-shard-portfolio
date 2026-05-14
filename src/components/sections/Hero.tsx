@@ -262,7 +262,11 @@ function RubiksCube({ onRotate }: { onRotate?: () => void }) {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
-    mount.appendChild(renderer.domElement);
+    const canvas = renderer.domElement;
+    canvas.style.display = "block";
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    mount.appendChild(canvas);
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
     const amber = new THREE.PointLight(0xf59e0b, 1.6, 50);
@@ -336,13 +340,17 @@ function RubiksCube({ onRotate }: { onRotate?: () => void }) {
     cubiesRef.current = cubies;
 
     const resize = () => {
-      const w = mount.clientWidth;
-      const h = mount.clientHeight;
+      let w = mount.clientWidth;
+      let h = mount.clientHeight;
+      if (w === 0) w = mount.parentElement?.clientWidth ?? 320;
+      if (h === 0) h = 320;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
     };
     resize();
+    // Re-run after a tick to catch any late layout
+    const initTimer = setTimeout(resize, 50);
     const ro = new ResizeObserver(resize);
     ro.observe(mount);
 
@@ -550,6 +558,7 @@ function RubiksCube({ onRotate }: { onRotate?: () => void }) {
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
+      clearTimeout(initTimer);
       cancelAnimationFrame(rafRef.current);
       ro.disconnect();
       renderer.domElement.removeEventListener("pointerdown", onPointerDown);
